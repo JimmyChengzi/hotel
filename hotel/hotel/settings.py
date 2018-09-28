@@ -78,11 +78,13 @@ WSGI_APPLICATION = 'hotel.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
+
+# 由于pc原因，coolsou[本机测试 需要更改 user:lin
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hotel',
-        'USER':'root',
+        'USER':'lin',
         'PASSWORD':'123456',
         'HOST':'localhost',
         'POST':3306,
@@ -108,3 +110,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR,"static"),)
+

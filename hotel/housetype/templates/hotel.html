@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .pic{
+            height: 150px;
+            width: 200px;
+        }
+        #hotel_show{
+
+        }
+    </style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+<--------------------------------------------主题分割线------------------------------------------------------->
+<div class="show">
+    <table class="page_hotel_show">
+        {% for h in page_1 %}
+
+            <tr>
+{#            <div class="hotel">#}
+                <td>
+                    <img src="/{{ h.pic }}" class="pic">
+
+                </td>
+                <td class="hotel_{{ h.id }}" id="hotel_show">
+                    <a href="#"><span>{{ h.title }}</span></a>
+                    <br>
+                    <span>{{ h.address }}</span>
+                    &nbsp;&nbsp;<span>{{ h.hotel_user }}</span>
+                    <br>
+                </td>
+{#            </div>#}
+            </tr>
+        {% endfor %}
+
+    </table>
+    <table>
+        <tr>
+            {% for t in length %}
+                <td>
+                    <a href="/housetype/hotel/"><input type="button" value="{{ t }}"></a>
+                </td>
+            {% endfor %}
+
+        </tr>
+    </table>
+    <script src="/static/housetype/js/jquery-1.11.3.js"></script>
+    <script>
+        $(function () {
+            $(".btn").click(function () {
+                $.get(function () {
+
+                })
+            })
+        })
+    </script>
+</div>
+
+</body>
+</html>
