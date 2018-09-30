@@ -5,7 +5,7 @@ function changepage(event){
     var page = event.target.name;
     console.log('调用merchant_order.js')
     $.ajax({
-        url:"/merchant/m_o_pages/",
+        url:"/merchant_orders/m_o_pages/",
         type:"post",
         data:{
             csrfmiddlewaretoken:$("[name='csrfmiddlewaretoken']").val(),

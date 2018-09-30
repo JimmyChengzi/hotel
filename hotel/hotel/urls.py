@@ -18,5 +18,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^merchant/',include('order.urls')),
+    url(r'^merchant_orders/',include('order.urls')),
+    url(r'^merchant_manage',include('merchant.urls')),
 ]
