@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="/static/js/jquery-1.11.3.js"></script>
-    <script src="/static/js/jquery.cookie.js"></script>
     <script src="/static/js/merchant_order.js"></script>
 </head>
 <body>
@@ -20,20 +19,20 @@
         </div>
     </div>
     <div id="showorders">
-{#        {% if ordershow %}#}
+        {% if showorders %}
             {% for order in showorders %}
             <div>
                 {{order.ordermessage}}
             </div>
              {% endfor %}
     </div>
-    <div>
+    <div id="showbtns">
         {% for page in pagelist %}
-            <button name="page{{ page }}" class="pagebtn"></button>
+            <button name="page{{ page }}" class="pagebtn">{{ page }}</button>
         {% endfor %}
     </div>
-{#        {% else %}#}
-{#            <div>没有订单记录</div>#}
-{#        {% endif %}#}
+        {% else %}
+            <div>没有订单记录</div>
+        {% endif %}
 </body>
 </html>

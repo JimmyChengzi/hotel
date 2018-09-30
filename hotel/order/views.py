@@ -1,7 +1,8 @@
 from django.shortcuts import render
-import json
+from django.core import serializers
 from order.models import *
 from django.http import HttpResponse
+import json
 
 # Create your views here.
 def login_merchant(func):
@@ -17,12 +18,16 @@ def merchant_order_views(requst):
         merchant_id = '11'
 
         orderlist = MerchantOrder.objects.filter(merchantId=merchant_id)
-        pagecount = orderlist.count()//5+1
+        print(orderlist)
+        pagecount = orderlist.count()//5
+        if orderlist.count()%5 != 0:
+            pagecount += 1
         showorders = orderlist[0:5]
-        print(showorders)
         pagelist = []
-        for p in range(pagecount):
-            pagelist.append(p)
+        print(pagecount)
+        for p in range(1,pagecount+1):
+            print(p)
+            pagelist.append(str(p))
         print(orderlist.count())
         # for order in showoders:
         #     print(order.ordermessage)
@@ -30,10 +35,24 @@ def merchant_order_views(requst):
 
 def merchant_order_pages_views(requst):
     page = int(requst.POST.get('page')[4::])
-    orderlist = MerchantOrder.objects.filter(merchant_id=merchant_id).order_by("time")
-    ordercount = orderlist.count()
+    print(page)
+    merchant_id = "11"
+    orderlist = MerchantOrder.objects.filter(merchantId=merchant_id)
+    type(orderlist)
     start = (page-1)*5
     stop = start + 5
     showoders = orderlist[start:stop]
-    jsonStr = json.dumps(showoders)
+    pagecount = orderlist.count() // 5
+    if orderlist.count() % 5 != 0:
+        pagecount += 1
+    pagelist = []
+    print(pagecount)
+    for p in range(1, pagecount + 1):
+        print(p)
+        pagelist.append(str(p))
+    orderStr = serializers.serialize('json',showoders)
+    pageStr = json.dumps(pagelist)
+    dic = {"pagelist":pageStr,"showorders":orderStr}
+    jsonStr = json.dumps(dic)
+    print(jsonStr)
     return HttpResponse(jsonStr)

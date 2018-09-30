@@ -2,37 +2,46 @@
  * Created by tarena on 18-9-29.
  */
 function changepage(event){
-    var page = event.target.name
+    var page = event.target.name;
+    console.log('调用merchant_order.js')
     $.ajax({
-        url:"/merchant_manage/m_o_pages/",
+        url:"/merchant/m_o_pages/",
         type:"post",
-        data{
+        data:{
             csrfmiddlewaretoken:$("[name='csrfmiddlewaretoken']").val(),
             page:page
         },
         dataType:"json",
         async:false,
         success:function (data) {
-            if(data.status==0){
-                var orderhtml = ''
-                var pagehtml = ''
-                $.each(data,function (i,obj) {
-                    var thepage = toString(i+1);
-                    var order = JSON.parse(obj);
-                    var ordermsg = order.message;
-                    var orderid = order.id;
-                    orderhtml += "<div name='"+orderid+"'>"+ordermsg+"</div>";
-                    pagehtml += "<button value='"+thepage+"'>"+thepage+"</button>"
-                });
-                var html = orderhtml + pagehtml
-                $("#ordershow").html(html)
-            }
+            var orderhtml = '';
+            var pagehtml = '';
+            console.log(data.showorders);
+            var orders = JSON.parse(data.showorders);
+            var pagelist = JSON.parse(data.pagelist);
+            $.each(orders,function (i,obj) {
+                var order = obj.fields;
+                var ordermsg = order.ordermessage;
+                var orderid = order.orderid;
+                orderhtml += "<div name='"+orderid+"'>"+ordermsg+"</div>";
+            });
+            $.each(pagelist,function (i,obj) {
+                pagehtml += "<button name='page"+obj+"' class='pagebtn'>"+obj+"</button> "
+            });
+            console.log(orderhtml);
+            console.log(pagehtml);
+            $("#showorders").html(orderhtml);
+            $("#showbtns").html(pagehtml);
         }
     })
 }
 
 $(function () {
-    $(".pagebtn").click(function (event) {
+    console.log('调用merchant_order.js')
+    // $(".pagebtn").click(function (event) {
+    //     changepage(event);
+    // })
+    $("#showbtns").on("click","button",function (event) {
         changepage(event);
     })
 });
