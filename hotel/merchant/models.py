@@ -17,5 +17,6 @@ class RoomType(models.Model):
     price = models.IntegerField(verbose_name="价格")
     facility = models.CharField(max_length=30,verbose_name="配套设施")
     examine = models.IntegerField(choices=Examine,verbose_name="审核状态")
+    stock = models.IntegerField(verbose_name="库存",default=1)
     isActive = models.BooleanField(verbose_name="是否激活")
     isShow = models.BooleanField(verbose_name="是否上架",default=True)
