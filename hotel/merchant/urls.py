@@ -4,4 +4,5 @@ from merchant.views import *
 urlpatterns = [
     url(r'^manage_room/$',manage_room_views),
     url(r'^change_room/([\s\S]*?)/',change_room_views,name='changeroom'),
+    url(r'^add_newroom/',add_newroom_views),
 ]

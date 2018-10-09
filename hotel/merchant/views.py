@@ -11,6 +11,7 @@ def manage_room_views(request):
         AllRoom = RoomType.objects.filter(merchantId=merchant_id,isActive=True,isShow=True)
         return render(request,'room_manage.html',locals())
 
+# 改变房型信息页面
 def change_room_views(request,roomtitle):
     if request.method == "GET":
         merchant_id = "11"
@@ -38,5 +39,34 @@ def change_room_views(request,roomtitle):
                 for p in f1.chunks():
                     pic.write(p)
             TheRoom.picture = '/static/image/roomtype/' + filename
+        TheRoom.save()
+        return HttpResponse('修改成功')
+
+# 增加房型页面
+def add_newroom_views(request):
+    if request.method == "GET":
+        return render(request,'room_add.html')
+    elif request.method == 'POST':
+        merchant_id = "11"
+        title = request.POST.get('title')
+        CheackRoom = RoomType.objects.filter(merchantId=merchant_id,title = title)
+        if CheackRoom:
+            return HttpResponse('该类型房间名称已被使用')
+        TheRoom = RoomType()
+        TheRoom.title = title
+        filename = merchant_id + '_' + str(TheRoom.id) + '.jpg'
+        path = os.path.join(MEDIA_ROOT, filename)
+        f1 = request.FILES.get('picture')
+        if f1:
+            with open(path, 'wb') as pic:
+                for p in f1.chunks():
+                    pic.write(p)
+            TheRoom.picture = '/static/image/roomtype/' + filename
+        TheRoom.merchantId = merchant_id
+        TheRoom.acreage = 11.11
+        TheRoom.floor = 5
+        TheRoom.price = 600
+        TheRoom.examine = 1
+        TheRoom.isActive = True
         TheRoom.save()
         return HttpResponse('修改成功')
