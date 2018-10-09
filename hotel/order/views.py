@@ -12,6 +12,7 @@ def login_merchant(func):
         else:
             response = redirect('/merchant_login')
             response.set_cookie('url',request.url)
+
 def merchant_order_views(requst):
     if requst.method == 'GET':
         # merchant_id = request.session.get('merchantId')
@@ -41,7 +42,7 @@ def merchant_order_pages_views(requst):
     type(orderlist)
     start = (page-1)*5
     stop = start + 5
-    showoders = orderlist[start:stop]
+    showorders = orderlist[start:stop]
     pagecount = orderlist.count() // 5
     if orderlist.count() % 5 != 0:
         pagecount += 1
@@ -50,7 +51,7 @@ def merchant_order_pages_views(requst):
     for p in range(1, pagecount + 1):
         print(p)
         pagelist.append(str(p))
-    orderStr = serializers.serialize('json',showoders)
+    orderStr = serializers.serialize('json',showorders)
     pageStr = json.dumps(pagelist)
     dic = {"pagelist":pageStr,"showorders":orderStr}
     jsonStr = json.dumps(dic)

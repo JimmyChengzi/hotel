@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="head">
+        <h2>住房管理</h2>
+    </div>
+    {% for room in AllRoom %}
+    <div id="{{ room.title }}">
+        <h5>{{ room.title }}</h5>
+        <p>楼层{{ room.floor }}</p>
+        <p>价格： {{ room.price }}元</p>
+        <img src="{{ room.picture }}">
+    </div>
+        <button onclick="window.location.href='/merchant_manage/change_room/{{ room.title }}/'">修改</button>
+    {% endfor %}
+    <button onclick="window.location.href='/merchant_manage/add_newroom/'">增加房型</button>
+</body>
+</html>
