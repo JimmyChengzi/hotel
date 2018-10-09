@@ -17,7 +17,6 @@ def merchant_order_views(requst):
     if requst.method == 'GET':
         # merchant_id = request.session.get('merchantId')
         merchant_id = '11'
-
         orderlist = MerchantOrder.objects.filter(merchantId=merchant_id)
         print(orderlist)
         pagecount = orderlist.count()//5
@@ -49,11 +48,22 @@ def merchant_order_pages_views(requst):
     pagelist = []
     print(pagecount)
     for p in range(1, pagecount + 1):
-        print(p)
         pagelist.append(str(p))
-    orderStr = serializers.serialize('json',showorders)
-    pageStr = json.dumps(pagelist)
-    dic = {"pagelist":pageStr,"showorders":orderStr}
-    jsonStr = json.dumps(dic)
-    print(jsonStr)
-    return HttpResponse(jsonStr)
+    print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+    print(pagelist)
+    if showorders:
+        status = "1"
+        orderStr = serializers.serialize('json', showorders)
+        pageStr = json.dumps(pagelist)
+        dic = {"status": status, "pagelist": pageStr, "showorders": orderStr, "page": str(page),
+               "lastpage": pagelist[-1]}
+        print('@@@@@@@@@@')
+        print(dic["lastpage"])
+        jsonStr = json.dumps(dic)
+        print(jsonStr)
+        return HttpResponse(jsonStr)
+    else:
+        status = "0"
+        dic = {"status":status}
+        jsonStr = json.dumps(dic)
+        return HttpResponse(jsonStr)
