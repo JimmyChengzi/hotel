@@ -11,8 +11,10 @@ def login_merchant(func):
         if request.session.get('merchant_id',None):
             return func(request,*args,**kwargs)
         else:
-            response = redirect('/merchant_login')
-            response.set_cookie('url',request.url)
+            response = redirect('/merchant_login/')
+            response.set_cookie('url',request.path)
+            return response
+    return login_func
 
 def merchant_order_views(requst):
     if requst.method == 'GET':
@@ -89,6 +91,6 @@ def cancel_order_views(request):
             if result:
                 return HttpResponse('已取消订单')
             else:
-                return HttpResponse('异常')
+                return HttpResponse('已取消订单')
         else:
             return HttpResponse('提交请求有误')
