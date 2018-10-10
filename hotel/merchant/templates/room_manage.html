@@ -13,7 +13,9 @@
         <h5>{{ room.title }}</h5>
         <p>楼层{{ room.floor }}</p>
         <p>价格： {{ room.price }}元</p>
-        <img src="{{ room.picture }}">
+        {% if room.picture != None %}
+        <img src="{{ room.picture }}" width="220px">
+        {% endif %}
     </div>
         <button onclick="window.location.href='/merchant_manage/change_room/{{ room.title }}/'">修改</button>
     {% endfor %}

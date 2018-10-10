@@ -24,8 +24,10 @@
             {% if showorders %}
                 {% for order in showorders %}
                 <div>
-                    {{order.ordermessage}}
+                    {{order.orderid}}
                 </div>
+                    <br/>
+                    <button onclick="window.location.href='/merchant_orders/cancel_order/?order_id={{ order.orderid }}'">取消订单</button>
                  {% endfor %}
         </div>
         <div id="showbtns">

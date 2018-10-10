@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.core import serializers
 from order.models import *
 from django.http import HttpResponse
+from merchant.models import *
 import json
 
 # Create your views here.
@@ -67,3 +68,27 @@ def merchant_order_pages_views(requst):
         dic = {"status":status}
         jsonStr = json.dumps(dic)
         return HttpResponse(jsonStr)
+
+# 取消订单页面
+def cancel_order_views(request):
+    if request.method == "GET":
+        order_id = request.GET.get("order_id")
+        merchant_id = "11"
+        TheOrder = MerchantOrder.objects.filter(merchantId=merchant_id,orderid=order_id)
+        print(TheOrder)
+        if TheOrder:
+            TheOrder[0].orderstatus = 0
+            roomtype = TheOrder[0].roomtype
+            print("$$$")
+            print(roomtype)
+            number = TheOrder[0].number
+            TheOrder[0].save()
+            TheRoom = RoomType.objects.filter(merchantId=merchant_id,title=roomtype)[0]
+            origin_stock = TheRoom.stock
+            result=RoomType.objects.filter(merchantId=merchant_id,title=roomtype,stock=origin_stock).update(stock=origin_stock+number)
+            if result:
+                return HttpResponse('已取消订单')
+            else:
+                return HttpResponse('异常')
+        else:
+            return HttpResponse('提交请求有误')
